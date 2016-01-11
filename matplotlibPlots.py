@@ -19,7 +19,7 @@ plt.title('Intresting Graph \n Check it out')
 plt.legend()
 plt.show()
 
-# Bar chart and Histogram
+# Bar chart
 import matplotlib.pyplot as plt
 
 x=[1,2,3,4,5]
@@ -32,7 +32,7 @@ plt.title('Intresting Graph \n Check it out')
 plt.legend()
 plt.show()
 
-#HISTOGRAM
+#Histogram
 population_ages=[10,40,30,90,80,34,56,78,34,56,23,12,32,43,54,65,6,53,65,78,87,65,43,23]
 #ids=[x for x in range(len(population_ages))]
 #plt.bar(ids,population_ages)
