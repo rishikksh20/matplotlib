@@ -43,11 +43,14 @@ plt.title('Intresting Graph \n Check it out')
 plt.show()
 
 # Data from Internet
-import urllib
+import urllib2
 import matplotlib.dates as mdates
-def stock_data(stock):
-    stock_price_url='http://charapi.finance.yahoo.com/instrument/1.0/'+stock+'/chartdata;type=quote;range=10y/csv'    
-    source_code=urllib.request.urlopen(stock_price_url).read().decode()
+def stockData(stock):
+    stock_price_url='http://chartapi.finance.yahoo.com/instrument/1.0/'+stock+'/chartdata;type=quote;range=10y/csv'    
+    source_req=urllib2.Request(stock_price_url)
+    source_response=urllib2.urlopen(source_req)
+    source_code=source_response.read().decode()
+    
     stock_data=[]
     split_source=source_code.split('\n')
     
@@ -58,7 +61,7 @@ def stock_data(stock):
                 stock_data.append(line)
                 
                 
-    date,closep,highp,openp,volume=np.loadtxt(stock_data,
+    date,closep,highp,lowp,openp,volume=np.loadtxt(stock_data,
                                               delimiter=',',
                                               unpack=True,
                                               converters={0: bytespdate2num('%Y%m%d')})
@@ -72,8 +75,10 @@ def stock_data(stock):
 def bytespdate2num(fmt, encoding='utf-8'):
     strconverter = mdates.strpdate2num(fmt)
     def bytesconverter(b):
-        s=b.decode(encoding)
+        s = b.decode(encoding)
         return strconverter(s)
     return bytesconverter
+    
 
-stock_data('TSLA') #forecasting tesla stock prices
+
+stockData('TSLA') #forecasting tesla stock prices
