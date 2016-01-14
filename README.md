@@ -13,3 +13,8 @@ Debian / Ubuntu : `sudo apt-get install python-matplotlib`
 
 Fedora / Redhat :  `sudo yum install python-matplotlib`
 
+## Credit :
+All datasets use for this program is imported from: https://vincentarelbundock.github.io/Rdatasets/datasets.html
+
+## Extras :
+For more documentation regarding matplotlib [Visit here!](http://matplotlib.org/).
