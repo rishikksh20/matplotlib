@@ -4,7 +4,7 @@ Created on Sun Jan 17 01:28:28 2016
 
 @author: rishikesh
 """
-
+# Python 3 reccomended for this program
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
