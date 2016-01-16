@@ -1,19 +1,22 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jan 17 01:28:28 2016
+Created on Sun Jan 17 01:52:02 2016
 
 @author: rishikesh
 """
-# Python 3 reccomended for this program
+
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import matplotlib.ticker as mticker
 from matplotlib.finance import candlestick_ohlc
+from matplotlib import style
 
 import numpy as np
 import urllib
 import datetime as dt
 
+style.use('fivethirtyeight')
+print(plt.style.available)
 
 print(plt.__file__)
 
@@ -42,10 +45,13 @@ def graph_data(stock):
     fig = plt.figure()
     ax1 = plt.subplot2grid((6,1), (0,0), rowspan=1, colspan=1)
     plt.title(stock)
-    ax2 = plt.subplot2grid((6,1), (1,0), rowspan=4, colspan=1,sharex=ax1)   #sharex=ax1 for sharing x-axis
-    plt.xlabel('Date')
+    plt.ylabel('H-L')
+    ax2 = plt.subplot2grid((6,1), (1,0), rowspan=4, colspan=1, sharex=ax1)
     plt.ylabel('Price')
-    ax3 = plt.subplot2grid((6,1), (5,0), rowspan=1, colspan=1,sharex=ax1)
+    ax2v = ax2.twinx()
+    
+    ax3 = plt.subplot2grid((6,1), (5,0), rowspan=1, colspan=1, sharex=ax1)
+    plt.ylabel('MAvgs')
     
     
     stock_price_url = 'http://chartapi.finance.yahoo.com/instrument/1.0/'+stock+'/chartdata;type=quote;range=1y/csv'
@@ -78,8 +84,9 @@ def graph_data(stock):
     start = len(date[MA2-1:])
 
     h_l = list(map(high_minus_low, highp, lowp))
+    
 
-    ax1.plot_date(date,h_l,'-')
+    ax1.plot_date(date[-start:],h_l[-start:],'-')
     ax1.yaxis.set_major_locator(mticker.MaxNLocator(nbins=4, prune='lower'))
 
 
@@ -93,9 +100,8 @@ def graph_data(stock):
     bbox_props = dict(boxstyle='round',fc='w', ec='k',lw=1)
     
     ax2.annotate(str(closep[-1]), (date[-1], closep[-1]),
-                 xytext = (date[-1]+4, closep[-1]), bbox=bbox_props)
+                 xytext = (date[-1]+5, closep[-1]), bbox=bbox_props)
 
-    
 ##    # Annotation example with arrow
 ##    ax2.annotate('Bad News!',(date[11],highp[11]),
 ##                 xytext=(0.8, 0.9), textcoords='axes fraction',
@@ -108,6 +114,11 @@ def graph_data(stock):
 ##                 'size':15}
 ##    # Hard coded text 
 ##    ax2.text(date[10], closep[1],'Text Example', fontdict=font_dict)
+    
+    ax2v.fill_between(date[-start:],0, volume[-start:], facecolor='#0079a3', alpha=0.4)
+    ax2v.axes.yaxis.set_ticklabels([])
+    ax2v.grid(False)
+    ax2v.set_ylim(0, 3*volume.max())
 
 
 
@@ -137,6 +148,4 @@ def graph_data(stock):
     plt.show()
 
 
-
-
-graph_data('EBAY')
+graph_data('GOOG')
