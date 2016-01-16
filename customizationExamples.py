@@ -36,15 +36,22 @@ def stockData(stock):
         
     #Customization to the plot 
     subPlot.plot_date(date,closep,'-',label='price')
+    subPlot.axhline(150,color='k',linewidth=1)
     subPlot.fill_between(date,closep,150,where=(closep>150),facecolor='g',alpha=0.5) #Fill the graph 
     subPlot.fill_between(date,closep,150,where=(closep<150),facecolor='r',alpha=0.5) #Fill the graph
     #Rotate the dates label
     for label in subPlot.xaxis.get_ticklabels():
         label.set_rotation(45)
     subPlot.grid(True)#,color='b',linestyle='-',linewidth=1)
-    subPlot.xaxis.label.set_color('c')  #Change the color of x-axis label
-    subPlot.yaxis.label.set_color('r')  #Change the color of y-axis label
-    subPlot.set_yticks([0,100,200,300]) #Customize the y-axis  value ticks  
+    #subPlot.xaxis.label.set_color('c')  #Change the color of x-axis label
+    #subPlot.yaxis.label.set_color('r')  #Change the color of y-axis label
+    subPlot.set_yticks([0,100,200,300]) #Customize the y-axis  value ticks 
+    
+    subPlot.spines['left'].set_color('c')
+    subPlot.spines['right'].set_visible(False)
+    subPlot.spines['top'].set_visible(False)
+    subPlot.spines['left'].line_width(2)  
+    subPlot.ticks(axis='x',color='#f06215')
     
     plt.xlabel('Date')
     plt.ylabel('Price')
