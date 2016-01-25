@@ -14,6 +14,7 @@ labelX=''
 labelY=''
 x=[]
 y=[]
+# Read CSV file using csv library
 with open('USAccDeaths.csv','r') as csvfile:
     plots=csv.reader(csvfile, delimiter=',')
     for row in plots:
